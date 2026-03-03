@@ -1,4 +1,4 @@
-# Shahid - Portfolio Website
+# Sami - Portfolio Website
 
 A modern, high-performance portfolio website featuring stunning animations and smooth interactions.
 
@@ -160,7 +160,7 @@ Contributions, issues, and feature requests are welcome!
 
 ## 📧 Contact
 
-Shahid - Software Engineer
+Sami - Software Devloper
 
 ---
 
