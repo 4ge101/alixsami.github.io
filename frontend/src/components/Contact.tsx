@@ -58,7 +58,7 @@ const Contact = () => {
 
           <MagneticButton strength={0.4}>
             <a
-              href="mailto:theforgettenone2@gmail.com"
+              href="mailto:contact@AlixSami.com"
               className="inline-block px-12 py-5 font-display font-bold text-lg tracking-wider bg-primary text-primary-foreground rounded-full hover:shadow-[0_0_40px_hsl(36_100%_55%/0.3)] transition-all duration-500 group relative overflow-hidden"
             >
               <span className="relative z-10">contact@AlixSami</span>
