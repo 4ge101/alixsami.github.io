@@ -141,7 +141,7 @@ const Navigation = () => {
     <>
      <nav
         ref={navRef}
-        className={`fixed top-0 left-0 w-[76%] md:w-full mx-auto z-[100] transition-all duration-500 ${
+        className={`fixed top-0 left-0 w-full mx-auto z-[100] transition-all duration-500 ${
         scrolled
         ? "py-3 px-6 md:px-12 lg:px-20 backdrop-blur-lg bg-background/80 border-b border-border/30 shadow-[0_4        px_30px_rgba(0,0,0,0.3)]"
       : "py-5 px-6 md:px-12 lg:px-20"
