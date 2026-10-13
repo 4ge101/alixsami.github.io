@@ -24,7 +24,6 @@ const Navigation = () => {
   const logoRightRef = useRef<HTMLSpanElement>(null);
   const logoTextRef = useRef<HTMLSpanElement>(null);
 
-  // Live clock
   useEffect(() => {
     const update = () => {
       if (timeRef.current) {
@@ -40,7 +39,6 @@ const Navigation = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Scroll detection & active section & logo animation
   useEffect(() => {
     const handleScroll = () => {
       const s = window.scrollY > 80;
@@ -48,7 +46,6 @@ const Navigation = () => {
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
 
-    // Simplified Logo split animation on scroll using a single trigger
     const logoTl = gsap.timeline({
       scrollTrigger: {
         trigger: "body",
@@ -65,19 +62,14 @@ const Navigation = () => {
         .to(logoTextRef.current, { letterSpacing: "0.1em", duration: 1, ease: "none" }, 0);
     }
 
-    // Single ScrollTrigger to track sections instead of multiple
     const trackTrigger = ScrollTrigger.create({
       trigger: "body",
       start: "top top",
       end: "bottom bottom",
       onUpdate: (self) => {
-        // Find visible section more efficiently if needed, but for now we'll keep it simple
-        // and just throttle the section check
       }
     });
 
-    // Actually, keeping the per-section triggers is fine if they are dead simple.
-    // Let's just ensures they use 'will-change' and are efficient.
     const sections = navItems.map((item) => item.href.replace("#", ""));
     const triggers: ScrollTrigger[] = sections.map((id) =>
       ScrollTrigger.create({
@@ -97,7 +89,6 @@ const Navigation = () => {
     };
   }, []);
 
-  // Entrance animation - immediate, no 2s delay
   useEffect(() => {
     gsap.fromTo(
       navRef.current,
@@ -106,7 +97,6 @@ const Navigation = () => {
     );
   }, []);
 
-  // Mobile menu animation
   useEffect(() => {
     if (!menuRef.current) return;
     if (isOpen) {
@@ -149,7 +139,6 @@ const Navigation = () => {
     style={{ opacity: 0 }}
   >
         <div className="flex items-center justify-between max-w-7xl mx-auto">
-          {/* Logo: </shanhed> with scroll split */}
           <a
             href="#"
             className="font-display text-xl md:text-2xl font-black text-foreground tracking-tight group flex items-center"
@@ -179,7 +168,6 @@ const Navigation = () => {
             </span>
           </a>
 
-          {/* Desktop nav - bold pill style */}
           <div className="hidden lg:flex items-center gap-1 bg-card/60 rounded-full p-1.5 backdrop-blur-lg border border-border/30">
             {navItems.map((item) => {
               const isActive = activeSection === item.href.replace("#", "");
@@ -207,7 +195,6 @@ const Navigation = () => {
             })}
           </div>
 
-          {/* Right side */}
           <div className="hidden lg:flex items-center gap-6">
             <div className="flex items-center gap-2 text-muted-foreground text-xs font-body">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
@@ -227,7 +214,6 @@ const Navigation = () => {
             </MagneticButton>
           </div>
 
-          {/* Hamburger */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="lg:hidden relative w-10 h-10 flex items-center justify-center z-[110]"
@@ -242,7 +228,6 @@ const Navigation = () => {
         </div>
       </nav>
 
-      {/* Mobile fullscreen menu */}
       <div
         ref={menuRef}
         className="fixed inset-0 z-[99] bg-background/95 backdrop-blur-2xl lg:hidden flex flex-col justify-between p-6 pt-24 pb-12 overflow-y-auto"

@@ -34,7 +34,6 @@ const Experience = () => {
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
     const ctx = gsap.context(() => {
-      // 3D Card Stack Effect - only animate when in view
       cardsRef.current.forEach((card, i) => {
         if (!card) return;
 
@@ -57,7 +56,7 @@ const Experience = () => {
             opacity: 1,
             y: 0,
             rotateX: 0,
-            ease: "none", // Linear is faster for scrub
+            ease: "none",
           }
         );
       });
@@ -71,7 +70,6 @@ const Experience = () => {
     <section ref={sectionRef} id="experience" className="section-padding bg-background relative overflow-x-hidden">
       <div className="max-w-4xl mx-auto relative z-10 px-4 md:px-6">
 
-        {/* Section Header */}
         <div className="mb-16 md:mb-24 text-center">
           <h2 className="text-[12vw] sm:text-[4rem] md:text-[6rem] font-black font-display tracking-tight leading-none mb-4 text-center">
             EXPERIENCE
@@ -79,7 +77,6 @@ const Experience = () => {
           <div className="w-24 h-1 bg-primary mx-auto" />
         </div>
 
-        {/* 3D Cards Container */}
         <div className="flex flex-col gap-10 md:gap-32 perspective-[1000px]">
           {experiences.map((exp, i) => (
             <div
@@ -87,11 +84,9 @@ const Experience = () => {
               ref={(el) => { cardsRef.current[i] = el; }}
               className="group relative transform-style-3d will-change-transform"
             >
-              {/* Glow Effect */}
               <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-3xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
               <div className="relative bg-card/40 backdrop-blur-xl border border-white/10 p-5 md:p-12 rounded-3xl overflow-hidden hover:translate-y-[-5px] transition-all duration-500 shadow-2xl group-hover:border-primary/30">
-                {/* Mobile-only subtle accent border */}
                 <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-primary/50 to-transparent md:hidden" />
 
                 <div className="flex flex-col md:flex-row justify-between items-start gap-2 md:gap-6 mb-4 md:mb-6">

@@ -12,7 +12,6 @@ const About = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Pin the section
       ScrollTrigger.create({
         trigger: sectionRef.current,
         start: "top top",
@@ -21,7 +20,6 @@ const About = () => {
         scrub: 0.1,
       });
 
-      // Text Color Fill Animation
       const words = textRef.current?.querySelectorAll(".word");
       if (words) {
         gsap.to(words, {
@@ -36,7 +34,6 @@ const About = () => {
         });
       }
 
-      // Refraction background letters fill - primary color
       const letters = refractionRef.current?.querySelectorAll(".letter");
       if (letters) {
         gsap.to(letters, {
@@ -51,7 +48,6 @@ const About = () => {
         });
       }
 
-      // Reveal Effect for Stats
       gsap.from(".stat-item", {
         y: 40,
         opacity: 0,
@@ -73,11 +69,9 @@ const About = () => {
   return (
     <section ref={sectionRef} id="about" className="relative h-screen bg-black text-white overflow-hidden will-change-transform">
 
-      {/* Content Layer */}
       <div className="relative z-10 container mx-auto px-6 h-full flex items-center">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 w-full">
 
-          {/* Left: Interactive/Visual Area */}
           <div className="hidden lg:flex flex-col justify-center relative pointer-events-none">
             <div
               ref={refractionRef}
@@ -91,7 +85,6 @@ const About = () => {
             </div>
           </div>
 
-          {/* Right: Text Content */}
           <div ref={contentRef} className="flex flex-col justify-center">
             <div className="flex items-center gap-4 mb-8">
               <span className="text-white/20 font-mono tracking-widest uppercase text-[10px]">/About</span>
@@ -105,10 +98,9 @@ const About = () => {
               ))}
             </p>
 
-            {/* Stats */}
             <div className="grid grid-cols-2 gap-4 md:gap-8 border-t border-white/10 pt-8">
               <div className="stat-item">
-                <h3 className="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-white/20 mb-1 md:mb-2">01+</h3>
+                <h3 className="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white to-white/20 mb-1 md:mb-2">04+</h3>
                 <p className="text-[10px] md:text-sm text-gray-500 uppercase tracking-wider font-mono">Years Exp.</p>
               </div>
               <div className="stat-item">
@@ -117,7 +109,6 @@ const About = () => {
               </div>
             </div>
 
-            {/* Socials */}
             <div className="flex gap-6 mt-12">
               <a href="https://github.com/4ge101" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full border border-white/10 hover:bg-white/10 hover:scale-110 transition-all group backdrop-blur-md bg-white/5">
                 <Github className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" />

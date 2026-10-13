@@ -12,7 +12,6 @@ const Intro = () => {
     const ringsRef = useRef<HTMLDivElement>(null);
     const particlesRef = useRef<HTMLDivElement>(null);
 
-    // Initialize based on screen width to prevent mobile flicker
     const [isVisible, setIsVisible] = useState(() => {
         if (typeof window !== "undefined") {
             return window.innerWidth >= 768;
@@ -26,7 +25,6 @@ const Intro = () => {
     useEffect(() => {
         if (!isVisible) return;
 
-        // Force scroll to top and lock everything
         window.scrollTo(0, 0);
         document.documentElement.style.overflow = "hidden";
         document.body.style.overflow = "hidden";
@@ -34,13 +32,11 @@ const Intro = () => {
         document.body.style.width = "100%";
         document.body.style.height = "100%";
 
-        // Stop Lenis if it exists
         (window as any).lenis?.stop();
 
         const ctx = gsap.context(() => {
             const tl = gsap.timeline({ paused: true });
 
-            // Epic slow-motion zoom with portal effect
             tl.to(leftRef.current, {
                 x: "-150vw",
                 y: "-30vh",
@@ -131,19 +127,15 @@ const Intro = () => {
                 });
             };
 
-            // Wheel handler with SLOWER accumulation for dramatic effect
             const handleWheel = (e: WheelEvent) => {
                 e.preventDefault();
                 e.stopImmediatePropagation();
 
                 if (isAnimating.current) return;
 
-                // Much slower sensitivity for cinematic feel
                 scrollAccumulator.current += Math.abs(e.deltaY) * 0.0008;
                 scrollAccumulator.current = Math.min(scrollAccumulator.current, 1);
 
-                // Efficient progress update using a persistent tween or just direct progress setting with a slight lag
-                // Actually, for a Cinematic feel, keeping one tween active and updating its destination is better
                 gsap.to(tl, {
                     progress: scrollAccumulator.current,
                     duration: 0.8,
@@ -157,7 +149,6 @@ const Intro = () => {
                 });
             };
 
-            // Touch handler for mobile
             let touchStartY = 0;
             const handleTouchStart = (e: TouchEvent) => {
                 touchStartY = e.touches[0].clientY;
@@ -190,7 +181,6 @@ const Intro = () => {
                 touchStartY = touchY;
             };
 
-            // Add listeners with capture phase to intercept early
             window.addEventListener("wheel", handleWheel, { passive: false, capture: true });
             window.addEventListener("touchstart", handleTouchStart, { passive: false, capture: true });
             window.addEventListener("touchmove", handleTouchMove, { passive: false, capture: true });
@@ -227,7 +217,6 @@ const Intro = () => {
                 perspective: "1000px"
             }}
         >
-            {/* Animated Portal Rings */}
             <div
                 ref={ringsRef}
                 className="absolute inset-0 flex items-center justify-center pointer-events-none"
@@ -247,7 +236,6 @@ const Intro = () => {
                 ))}
             </div>
 
-            {/* Glowing Portal Center */}
             <div
                 ref={portalRef}
                 className="absolute inset-0 flex items-center justify-center pointer-events-none"
@@ -262,7 +250,6 @@ const Intro = () => {
                 />
             </div>
 
-            {/* Particle Field */}
             <div
                 ref={particlesRef}
                 className="absolute inset-0 pointer-events-none"
@@ -284,7 +271,6 @@ const Intro = () => {
                 ))}
             </div>
 
-            {/* Main Content */}
             <div className="relative flex flex-col items-center justify-center w-full px-4 pointer-events-none z-10">
                 <div className="flex items-center justify-center font-display font-black tracking-tighter text-white whitespace-nowrap">
                     <span
@@ -320,7 +306,6 @@ const Intro = () => {
                     </span>
                 </div>
 
-                {/* Subtitle */}
                 <div
                     ref={subtitleRef}
                     className="mt-8 text-[clamp(0.8rem,2vw,1.5rem)] font-mono tracking-[0.3em] uppercase text-white/60 select-none"
@@ -333,7 +318,6 @@ const Intro = () => {
                 </div>
             </div>
 
-            {/* Central Glow Effect */}
             <div
                 ref={glowRef}
                 className="absolute inset-0 flex items-center justify-center pointer-events-none"
@@ -348,11 +332,9 @@ const Intro = () => {
                 />
             </div>
 
-            {/* Gradient Overlays */}
             <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-primary/5 pointer-events-none" />
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent pointer-events-none" />
 
-            {/* Scroll Indicator */}
             <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 pointer-events-none z-20">
                 <span className="text-[10px] font-mono tracking-[0.4em] uppercase text-white/50 animate-pulse">
                     Scroll to Enter
@@ -367,7 +349,6 @@ const Intro = () => {
                 </div>
             </div>
 
-            {/* Corner Accents */}
             <div className="absolute top-8 left-8 w-20 h-20 border-l-2 border-t-2 border-primary/30 pointer-events-none" />
             <div className="absolute top-8 right-8 w-20 h-20 border-r-2 border-t-2 border-primary/30 pointer-events-none" />
             <div className="absolute bottom-8 left-8 w-20 h-20 border-l-2 border-b-2 border-primary/30 pointer-events-none" />

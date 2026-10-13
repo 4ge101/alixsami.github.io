@@ -1,7 +1,6 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, useSpring, useMotionValue, AnimatePresence } from "framer-motion";
 
-// --- Fluid 2D Canvas Background ---
 const FluidBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouse = useRef({ x: 0, y: 0, vX: 0, vY: 0, lastX: 0, lastY: 0 });
@@ -26,10 +25,9 @@ const FluidBackground = () => {
     }
 
     const particles: IParticle[] = [];
-    const particleCount = 40; // Reduced further for Phase 2
+    const particleCount = 40;
 
     const resize = () => {
-      // Phase 2: Force DPR 1 for background to ensure maximum speed on Chromium
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
@@ -119,31 +117,29 @@ const FluidBackground = () => {
   return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none opacity-50" style={{ willChange: "transform" }} />;
 };
 
-// Tech tooltips for each letter with position
 const techTooltips: Record<number, { title: string; items: string[]; position: 'left' | 'top' | 'bottom' | 'right' }> = {
-  0: { // S
+  0: {
     title: "Systems Design",
     items: ["Scalability", "Load Balancing", "Caching", "Architecture"],
     position: "left"
   },
-  1: { // A
+  1: {
     title: "AI Services",
     items: ["LLM", "Embeddings & RAG", "Model inference APIs", "ML pipelines", "Vector Databases", "LangChain", "LlamaIndex"],
     position: "bottom"
   },
-  2: { // M
+  2: {
     title: "Massively Scalable APIs",
     items: ["REST", "GraphQL", "gRPC", "WebSockets", "API Gateways", "Rate Limiting", "Authentication & Authorization"],
     position: "top"
   },
-  3: { // I
+  3: {
     title: "Infrastructure",
     items: ["Cloud", "Containers", "CI/CD", "Monitoring", "Observability", "Security"],
     position: "bottom"
   }
 };
 
-// Position styles for tooltips
 const getTooltipPosition = (position: 'left' | 'top' | 'bottom' | 'right') => {
   switch (position) {
     case 'left':
@@ -169,7 +165,6 @@ const getTooltipPosition = (position: 'left' | 'top' | 'bottom' | 'right') => {
   }
 };
 
-// --- Kinetic Letter Component with Tooltip ---
 const KineticLetter = ({ char, index }: { char: string; index: number }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -181,7 +176,6 @@ const KineticLetter = ({ char, index }: { char: string; index: number }) => {
   const positionStyles = tooltip ? getTooltipPosition(tooltip.position) : null;
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    // Avoid calculations if cursor is too far (simple bounding box check first)
     const rect = e.currentTarget.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
@@ -189,7 +183,6 @@ const KineticLetter = ({ char, index }: { char: string; index: number }) => {
     const dX = e.clientX - centerX;
     const dY = e.clientY - centerY;
 
-    // Performance: Fast distance check before hypot
     if (Math.abs(dX) > 200 || Math.abs(dY) > 200) {
       x.set(0);
       y.set(0);
@@ -229,13 +222,12 @@ const KineticLetter = ({ char, index }: { char: string; index: number }) => {
         y: springY,
         display: "inline-block",
         willChange: "transform",
-        transform: "translate3d(0,0,0)" // Force hardware acceleration
+        transform: "translate3d(0,0,0)"
       }}
       className="cursor-default select-none hover:text-[#e05e28] transition-colors duration-500 relative"
     >
       {char}
 
-      {/* Tooltip */}
       <AnimatePresence>
         {showTooltip && tooltip && positionStyles && (
           <motion.div
@@ -246,17 +238,12 @@ const KineticLetter = ({ char, index }: { char: string; index: number }) => {
             className={`absolute z-50 pointer-events-none hidden md:block ${positionStyles.className}`}
             style={{ width: "280px" }}
           >
-            {/* Connector Line */}
             <div className={`absolute ${positionStyles.connectorClass}`} />
 
-            {/* Tooltip Card */}
             <div className="relative bg-black/95 backdrop-blur-xl border border-[#e05e28]/30 rounded-lg p-4 shadow-2xl">
-              {/* Glow Effect */}
               <div className="absolute inset-0 bg-[#e05e28]/5 rounded-lg blur-xl" />
 
-              {/* Content */}
               <div className="relative">
-                {/* Title */}
                 <div className="flex items-center gap-2 mb-3 pb-2 border-b border-[#e05e28]/20">
                   <div className="w-1.5 h-1.5 rounded-full bg-[#e05e28] animate-pulse" />
                   <h4 className="text-[#e05e28] font-mono text-xs font-bold uppercase tracking-wider">
@@ -264,7 +251,6 @@ const KineticLetter = ({ char, index }: { char: string; index: number }) => {
                   </h4>
                 </div>
 
-                {/* Items */}
                 <div className="space-y-1.5">
                   {tooltip.items.map((item, i) => (
                     <motion.div
@@ -281,7 +267,6 @@ const KineticLetter = ({ char, index }: { char: string; index: number }) => {
                 </div>
               </div>
 
-              {/* Corner Accents */}
               <div className="absolute top-0 left-0 w-3 h-3 border-l-2 border-t-2 border-[#e05e28]/50 rounded-tl" />
               <div className="absolute bottom-0 right-0 w-3 h-3 border-r-2 border-b-2 border-[#e05e28]/50 rounded-br" />
             </div>
@@ -299,13 +284,10 @@ const Hero = () => {
   return (
     <section id="home" className="relative h-screen bg-[#020202] overflow-x-hidden flex items-center justify-center font-display">
 
-      {/* Fluid Background Layer */}
       <FluidBackground />
 
-      {/* Kinetic Typography Layer */}
       <div className="relative z-10 flex flex-col items-center select-none pointer-events-auto">
 
-        {/* Meta Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -318,7 +300,6 @@ const Hero = () => {
           <div className="w-4 md:w-8 h-[1px] bg-[#e05e28]" />
         </motion.div>
 
-        {/* Main Heading */}
         <motion.h1
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -330,7 +311,6 @@ const Hero = () => {
           ))}
         </motion.h1>
 
-        {/* Subtitle with Scramble Effect */}
         <motion.div
           initial={{ opacity: 0, scaleX: 0 }}
           animate={{ opacity: 1, scaleX: 1 }}
@@ -344,7 +324,6 @@ const Hero = () => {
         </motion.div>
       </div>
 
-      {/* Brutalist HUD Elements */}
       <div className="absolute top-24 left-6 md:top-12 md:left-12 font-mono text-[8px] md:text-[9px] text-white/20 uppercase tracking-widest leading-relaxed">
         <div className="flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-[#e05e28] animate-pulse" />
@@ -363,7 +342,6 @@ const Hero = () => {
         />
       </div>
 
-      {/* Corner Decorative Lines */}
       <div className="absolute top-0 left-0 w-20 h-20 md:w-32 md:h-32 border-l border-t border-white/5 m-6 md:m-12 pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-20 h-20 md:w-32 md:h-32 border-r border-b border-white/5 m-6 md:m-12 pointer-events-none" />
 

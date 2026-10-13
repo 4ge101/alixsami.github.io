@@ -22,17 +22,14 @@ const CustomCursor = () => {
 
     if (!cursor || !follower) return;
 
-    // Use quickSetter for high-performance updates
     const cursorXSetter = gsap.quickSetter(cursor, "x", "px");
     const cursorYSetter = gsap.quickSetter(cursor, "y", "px");
     const followerXSetter = gsap.quickSetter(follower, "x", "px");
     const followerYSetter = gsap.quickSetter(follower, "y", "px");
 
-    // Center the cursor elements initially
     gsap.set(cursor, { xPercent: -50, yPercent: -50 });
     gsap.set(follower, { xPercent: -50, yPercent: -50 });
 
-    // Internal state for interpolation
     const mouse = { x: 0, y: 0 };
     const pos = { x: 0, y: 0 };
 
@@ -40,15 +37,12 @@ const CustomCursor = () => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
 
-      // Instant movement for small dot
       cursorXSetter(mouse.x);
       cursorYSetter(mouse.y);
     };
 
-    // Ticker-based smoothing for the follower circle
     const onTick = () => {
-      // Linear interpolation (lerp) for smooth lag
-      const dt = 0.15; // Smoothness factor
+      const dt = 0.15;
       pos.x += (mouse.x - pos.x) * dt;
       pos.y += (mouse.y - pos.y) * dt;
 
@@ -62,7 +56,6 @@ const CustomCursor = () => {
     gsap.ticker.add(onTick);
     window.addEventListener("mousemove", onMouseMove);
 
-    // Add hover effect listeners to interactive elements
     const interactiveElements = document.querySelectorAll("a, button, input, textarea, .hover-target");
     interactiveElements.forEach(el => {
       el.addEventListener("mouseenter", onHoverStart);
@@ -79,7 +72,6 @@ const CustomCursor = () => {
     };
   }, [isTouchDevice]);
 
-  // Update cursor style based on hover state
   useEffect(() => {
     if (isTouchDevice) return;
 

@@ -7,8 +7,8 @@ import MagneticButton from "./MagneticButton";
 gsap.registerPlugin(ScrollTrigger);
 
 const installCommands = {
-  "Windows": "irm https://alixsami.com/install.ps1 | iex",
-  "Linux / macOS": "curl -fsSL https://alixsami.com/install.sh | bash",
+  "Windows": "irm https://raw.githubusercontent.com/4ge101/Rust_Portfolio/main/install.ps1 | iex",
+  "Linux / macOS": "curl -fsSL https://raw.githubusercontent.com/4ge101/Rust_Portfolio/main/install.sh | sh",
 };
 
 const Contact = () => {
@@ -49,11 +49,9 @@ const Contact = () => {
 
   return (
     <section ref={sectionRef} id="contact" className="section-padding relative px-5 md:px-8">
-      {/* Ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-[radial-gradient(circle,rgba(224,94,40,0.08)_0%,transparent_70%)] pointer-events-none" />
 
       <div className="max-w-4xl mx-auto text-center relative z-10">
-        {/* Heading — prevent overflow on small screens */}
         <h2
           ref={headingRef}
           className="font-display font-black mb-8 leading-[0.9] tracking-tighter"
@@ -149,7 +147,6 @@ const Contact = () => {
         </div>
       </div>
 
-      {/* Footer */}
       <div className="mt-20 md:mt-32 pt-8 border-t border-border/30 flex flex-col md:flex-row items-center justify-between gap-3">
         <span className="text-muted-foreground text-sm font-body">
           © {new Date().getFullYear()} — Ali Sami

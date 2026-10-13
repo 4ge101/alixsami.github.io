@@ -17,7 +17,6 @@ const SmoothScroll = ({ children }: SmoothScrollProps) => {
       touchMultiplier: 2,
     });
 
-    // Expose lenis globally for coordination with other components (like Intro)
     (window as any).lenis = lenis;
 
     lenis.on("scroll", ScrollTrigger.update);
