@@ -1,11 +1,19 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Check, Copy } from "lucide-react";
 import MagneticButton from "./MagneticButton";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const installCommands = {
+  "Windows": "irm https://alixsami.com/install.ps1 | iex",
+  "Linux / macOS": "curl -fsSL https://alixsami.com/install.sh | bash",
+};
+
 const Contact = () => {
+  const [os, setOs] = useState<keyof typeof installCommands>("Linux / macOS");
+  const [copied, setCopied] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -32,6 +40,12 @@ const Contact = () => {
 
     return () => ctx.revert();
   }, []);
+
+  const copyCommand = () => {
+    navigator.clipboard.writeText(installCommands[os]);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <section ref={sectionRef} id="contact" className="section-padding relative px-5 md:px-8">
@@ -86,6 +100,51 @@ const Contact = () => {
                 </a>
               </MagneticButton>
             ))}
+          </div>
+
+          <div className="mt-16 md:mt-20 max-w-xl mx-auto text-left">
+            <p className="text-muted-foreground text-xs md:text-sm font-mono uppercase tracking-widest mb-4 text-center">
+              Prefer the terminal?
+            </p>
+            <div className="bg-card border border-border rounded-lg overflow-hidden transition-all duration-500 hover:border-primary/30 hover:shadow-[var(--shadow-glow)]">
+              <div className="flex items-center gap-4 border-b border-border px-3 md:px-4">
+                <div className="hidden sm:flex gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-white/10" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-primary/60" />
+                </div>
+                <div className="flex flex-1">
+                  {(Object.keys(installCommands) as (keyof typeof installCommands)[]).map((name) => (
+                    <button
+                      key={name}
+                      onClick={() => setOs(name)}
+                      className={`px-3 py-3 text-xs font-mono transition-colors duration-300 border-b-2 ${
+                        os === name
+                          ? "text-primary border-primary"
+                          : "text-muted-foreground border-transparent hover:text-foreground"
+                      }`}
+                    >
+                      {name}
+                    </button>
+                  ))}
+                </div>
+                <button
+                  onClick={copyCommand}
+                  className="flex items-center gap-2 text-xs font-mono text-muted-foreground hover:text-primary transition-colors duration-300 py-2"
+                >
+                  {copied ? <Check className="w-4 h-4 text-primary" /> : <Copy className="w-4 h-4" />}
+                  <span className="hidden sm:inline">{copied ? "Copied" : "Copy"}</span>
+                </button>
+              </div>
+              <div className="px-4 py-5 overflow-x-auto space-y-2 font-mono text-xs md:text-sm whitespace-nowrap">
+                <p className="text-muted-foreground"># one command, that's it</p>
+                <p className="text-foreground">
+                  <span className="text-primary select-none">$ </span>
+                  {installCommands[os]}
+                  <span className="inline-block w-2 h-4 ml-1 align-middle bg-primary animate-pulse" />
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
