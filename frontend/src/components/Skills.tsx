@@ -2,7 +2,6 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const specificSkills = [
-  { name: "Python", category: "GENERAL PURPOSE" },
   { name: "Rust", category: "SYSTEMS LANGUAGE" },
   { name: "React", category: "FRONTEND" },
   { name: "JavaScript", category: "CORE LANGUAGE" },
@@ -12,6 +11,7 @@ const specificSkills = [
   { name: "Linux", category: "OPERATING SYSTEMS" },
   { name: "Git", category: "VERSION CONTROL" },
   { name: "GitHub", category: "COLLABORATION PLATFORM" },
+  { name: "Embedded Systems", category: "MICROCONTROLLERS"},
 ];
 
 const Skills = () => {
